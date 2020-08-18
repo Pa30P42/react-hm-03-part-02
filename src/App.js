@@ -4,6 +4,7 @@ import axios from "axios";
 import ImageGallery from "./components/imageGallery/ImageGallery";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import Modal from "./components/modal/Modal";
 
 class App extends Component {
   state = {
@@ -11,6 +12,17 @@ class App extends Component {
     query: "",
     page: 1,
     isLoading: false,
+    modalOpen: false,
+  };
+
+  openModalFn = (image) => {
+    console.log(image);
+    this.setState({ modalSrc: image.largeImageURL });
+    this.setState({ modalOpen: true });
+  };
+
+  onClose = () => {
+    this.setState({ modalOpen: false });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,25 +58,32 @@ class App extends Component {
     this.setState({ query: query, page: 1 });
   };
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, modalOpen, modalSrc } = this.state;
     return (
       <>
+        {modalOpen && <Modal modalSrc={modalSrc} onClose={this.onClose} />}
         <SearchForm
           addImages={this.addImages}
           images={images}
           handleSubmit={this.handleSubmit}
         />
-        <ImageGallery images={images} />
+        <ImageGallery
+          images={images}
+          modalOpen={modalOpen}
+          openModalFn={this.openModalFn}
+        />
 
         {isLoading ? (
-          <Loader
-            type="BallTriangle"
-            color="#00BFFF"
-            margin=" 0 auto"
-            display="block"
-            height={80}
-            width={80} //3 secs
-          />
+          <div className="loaderContainer">
+            <Loader
+              type="BallTriangle"
+              color="#00BFFF"
+              margin=" 0 auto"
+              display="block"
+              height={80}
+              width={80} //3 secs
+            />
+          </div>
         ) : (
           ""
         )}

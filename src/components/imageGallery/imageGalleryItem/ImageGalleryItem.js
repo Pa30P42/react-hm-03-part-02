@@ -1,16 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 
-const ImageGalleryItem = ({ image }) => {
-  return (
-    <li className="ImageGalleryItem">
-      <img
-        src={image.webformatURL}
-        data-image={image.largeImageURL}
-        alt=""
-        className="ImageGalleryItem-image"
-      />
-    </li>
-  );
-};
+class ImageGalleryItem extends Component {
+  render() {
+    return (
+      <li
+        className="ImageGalleryItem"
+        onClick={() => {
+          this.props.openModalFn(this.props.image);
+        }}
+        // data-id={this.props.image.id}
+      >
+        <img
+          src={this.props.image.webformatURL}
+          data-image={this.props.image.largeImageURL}
+          alt=""
+          className="ImageGalleryItem-image"
+        />
+      </li>
+    );
+  }
+}
 
 export default ImageGalleryItem;

@@ -16,7 +16,6 @@ class App extends Component {
   };
 
   openModalFn = (image) => {
-    console.log(image);
     this.setState({ modalSrc: image.largeImageURL });
     this.setState({ modalOpen: true });
   };

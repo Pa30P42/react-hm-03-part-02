@@ -3,12 +3,10 @@ import "./Modal.css";
 
 class Modal extends Component {
   componentDidMount() {
-    console.log("modal open");
     window.addEventListener("keydown", this.handleKeyDown);
     window.addEventListener("click", this.handleClick);
   }
   componentWillUnmount() {
-    console.log("modal will close");
     window.removeEventListener("keydown", this.handleKeyDown);
     window.removeEventListener("click", this.handleClick);
   }
